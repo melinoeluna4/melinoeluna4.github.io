@@ -5,6 +5,7 @@ description: "CLI en Go que espera a que los puertos TCP acepten conexiones, sin
 tags: ["Go", "CLI", "Docker", "CI"]
 status: completed
 repoUrl: "https://github.com/melinoeluna4/portwait"
+demoUrl: "https://melinoeluna4.github.io/portwait/"
 featured: true
 startDate: 2026-11-02
 endDate: 2026-11-06

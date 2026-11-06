@@ -5,6 +5,7 @@ description: "CLI en Go para smoke tests HTTP con reintentos, timeout y código 
 tags: ["Go", "CLI", "HTTP", "Observabilidad"]
 status: completed
 repoUrl: "https://github.com/melinoeluna4/httpcheck"
+demoUrl: "https://melinoeluna4.github.io/httpcheck/"
 featured: true
 startDate: 2026-11-03
 endDate: 2026-11-06

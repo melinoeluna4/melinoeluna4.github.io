@@ -5,6 +5,7 @@ description: "CLI en Go que compara .env con .env.example y falla antes de que e
 tags: ["Go", "CLI", "DevOps", "Configuración"]
 status: completed
 repoUrl: "https://github.com/melinoeluna4/envcheck"
+demoUrl: "https://melinoeluna4.github.io/envcheck/"
 featured: true
 startDate: 2026-11-01
 endDate: 2026-11-06

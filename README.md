@@ -4,14 +4,15 @@ Personal site of Melinoe Luna, DevOps Engineer & Backend Developer: a portfolio,
 
 The visual language is Constructivist: asymmetric layouts, red/black geometry and direct typography. The light theme uses the DESIGN.md base palette; the dark theme keeps the same language with lighter surfaces and a brighter accent. There is no UI framework runtime.
 
-The portfolio also links four small Go CLI tools, each in its own public repository with README, tests and CI:
+The portfolio also links five small Go CLI tools, each in its own public repository with README, tests, CI and a standalone GitHub Pages landing page:
 
-| Tool        | What it does                                                           | Repository                                                          |
-| ----------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `envcheck`  | Compares `.env` with `.env.example` and fails on missing or empty keys | [melinoeluna4/envcheck](https://github.com/melinoeluna4/envcheck)   |
-| `portwait`  | Waits for TCP endpoints to accept connections                          | [melinoeluna4/portwait](https://github.com/melinoeluna4/portwait)   |
-| `httpcheck` | Smoke-tests HTTP endpoints with retries and an expected status         | [melinoeluna4/httpcheck](https://github.com/melinoeluna4/httpcheck) |
-| `treehash`  | Deterministic SHA-256 of a directory tree for CI cache keys            | [melinoeluna4/treehash](https://github.com/melinoeluna4/treehash)   |
+| Tool        | What it does                                                           | Repository                                        | Live                                              |
+| ----------- | ---------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------- |
+| `envcheck`  | Compares `.env` with `.env.example` and fails on missing or empty keys | [repo](https://github.com/melinoeluna4/envcheck)  | [demo](https://melinoeluna4.github.io/envcheck/)  |
+| `portwait`  | Waits for TCP endpoints to accept connections                          | [repo](https://github.com/melinoeluna4/portwait)  | [demo](https://melinoeluna4.github.io/portwait/)  |
+| `httpcheck` | Smoke-tests HTTP endpoints with retries and an expected status         | [repo](https://github.com/melinoeluna4/httpcheck) | [demo](https://melinoeluna4.github.io/httpcheck/) |
+| `treehash`  | Deterministic SHA-256 of a directory tree for CI cache keys            | [repo](https://github.com/melinoeluna4/treehash)  | [demo](https://melinoeluna4.github.io/treehash/)  |
+| `mdtoc`     | Generates a table of contents from Markdown headings                   | [repo](https://github.com/melinoeluna4/mdtoc)     | [demo](https://melinoeluna4.github.io/mdtoc/)     |
 
 The GitHub profile README lives in [melinoeluna4/melinoeluna4](https://github.com/melinoeluna4/melinoeluna4).
 
@@ -132,7 +133,7 @@ Code fences are highlighted at build time by Astro/Shiki. The production output 
 - `src/data/roadmap.ts`: roadmap items with `done`, `learning` or `planned`.
 - `src/config.ts`: name, role, focus, description, social URLs, handles and navigation.
 
-The repository ships the four Go CLI projects and the portfolio project, all with real public repositories. The posts, biography, skills, roadmap and social URLs are editable; confirm the LinkedIn path before sharing the site widely.
+The repository ships the five Go CLI projects and the portfolio project, all with real public repositories and demo pages. The posts, biography, skills, roadmap and social URLs are editable; confirm the LinkedIn path before sharing the site widely.
 
 ## Theme
 

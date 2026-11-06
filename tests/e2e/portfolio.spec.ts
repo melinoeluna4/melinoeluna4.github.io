@@ -6,6 +6,7 @@ const publicPages = [
   "/",
   "/proyectos/",
   "/proyectos/envcheck/",
+  "/proyectos/mdtoc/",
   "/sobre-mi/",
   "/blog/",
   "/blog/go-context-en-produccion/",
@@ -176,13 +177,14 @@ test.describe("projects", () => {
 
   test("lists every project with a text status and visible tags", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1, name: "Proyectos" })).toBeVisible();
-    await expect(page.locator(".project-card")).toHaveCount(5);
+    await expect(page.locator(".project-card")).toHaveCount(6);
     await expect(page.locator(".status--in-progress")).toHaveCount(1);
-    await expect(page.locator(".status--completed")).toHaveCount(4);
+    await expect(page.locator(".status--completed")).toHaveCount(5);
     await expect(page.locator(".status--in-progress").first()).toContainText("In Progress");
     await expect(page.locator(".status--completed").first()).toContainText("Completed");
     await expect(page.getByText("SHA-256", { exact: true })).toBeVisible();
     await expect(page.getByText("Configuración", { exact: true })).toBeVisible();
+    await expect(page.getByText("Markdown", { exact: true })).toBeVisible();
     await expect(page.locator('a[href=""]')).toHaveCount(0);
   });
 
@@ -190,7 +192,7 @@ test.describe("projects", () => {
     const envcheckCard = page.locator(".project-card").filter({ hasText: "envcheck" });
     await expect(envcheckCard.getByRole("link", { name: /Ver ficha/ })).toHaveCount(1);
     await expect(envcheckCard.getByRole("link", { name: /Repositorio/ })).toHaveCount(1);
-    await expect(envcheckCard.getByRole("link", { name: /Demo/ })).toHaveCount(0);
+    await expect(envcheckCard.getByRole("link", { name: /Demo/ })).toHaveCount(1);
 
     const edgeCard = page.locator(".project-card").filter({ hasText: "Edge Notes" });
     await expect(edgeCard.getByRole("link", { name: /Repositorio/ })).toHaveCount(1);
@@ -216,6 +218,10 @@ test.describe("project detail", () => {
     await expect(page.getByRole("link", { name: /Repositorio/ })).toHaveAttribute(
       "href",
       "https://github.com/melinoeluna4/envcheck",
+    );
+    await expect(page.getByRole("link", { name: /Demo/ })).toHaveAttribute(
+      "href",
+      "https://melinoeluna4.github.io/envcheck/",
     );
     await expect(page.getByRole("link", { name: "Volver a proyectos" })).toBeVisible();
     await expect(page.getByRole("heading", { level: 2, name: "Sigue explorando" })).toBeVisible();
@@ -256,7 +262,7 @@ test.describe("about", () => {
       await expect(page.getByRole("heading", { level: 3, name: level })).toBeVisible();
     }
 
-    await expect(page.locator(".skill")).toHaveCount(22);
+    await expect(page.locator(".skill")).toHaveCount(23);
   });
 
   test("passes axe", async ({ page }) => {
@@ -403,6 +409,7 @@ test.describe("SEO and feeds", () => {
     { path: "/", type: "website" as const },
     { path: "/proyectos/", type: "website" as const },
     { path: "/proyectos/envcheck/", type: "website" as const },
+    { path: "/proyectos/mdtoc/", type: "website" as const },
     { path: "/sobre-mi/", type: "website" as const },
     { path: "/blog/", type: "website" as const },
     { path: "/blog/go-context-en-produccion/", type: "article" as const },
@@ -443,6 +450,7 @@ test.describe("SEO and feeds", () => {
     expect(body).toContain("https://melinoeluna4.github.io/");
     expect(body).toContain("https://melinoeluna4.github.io/proyectos/");
     expect(body).toContain("https://melinoeluna4.github.io/proyectos/envcheck/");
+    expect(body).toContain("https://melinoeluna4.github.io/proyectos/mdtoc/");
     expect(body).toContain("https://melinoeluna4.github.io/blog/go-context-en-produccion/");
     expect(body).toContain("https://melinoeluna4.github.io/blog/etiqueta/go/");
     expect(body).not.toContain("kubernetes-no-es-la-respuesta");

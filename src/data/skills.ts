@@ -34,6 +34,7 @@ export const skills = [
   { name: "Go", category: "Backend", level: "advanced" },
   { name: "CLI tools", category: "Backend", level: "advanced" },
   { name: "Testing en Go", category: "Backend", level: "advanced" },
+  { name: "Documentación técnica", category: "Herramientas", level: "advanced" },
   { name: "Docker", category: "Infraestructura", level: "advanced" },
   { name: "Linux", category: "Infraestructura", level: "advanced" },
   { name: "Git", category: "Herramientas", level: "advanced" },

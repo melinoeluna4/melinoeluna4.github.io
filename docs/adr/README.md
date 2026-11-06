@@ -8,3 +8,4 @@ Why the code is the way it is: one record per decision, never edited after it is
 | [0002](0002-design-light-theme-uses-the-design.md)         | Design: Constructivist base tokens in light and phosphor terminal tokens in dark                                             | 2026-11-05 | superseded by 0003 |
 | [0003](0003-static-github-pages-content-collections.md)    | Static content-collection portfolio on GitHub Pages, client-side blog filter with static tag pages, all-Constructivist theme | 2026-11-06 | accepted           |
 | [0004](0004-add-go-cli-series-and-project-detail-pages.md) | Add a four-tool Go CLI series, project detail pages and a GitHub profile README                                              | 2026-11-06 | accepted           |
+| [0005](0005-add-per-tool-landing-pages-and-mdtoc.md)       | Add five per-tool GitHub Pages landing pages and the `mdtoc` CLI                                                             | 2026-11-06 | accepted           |

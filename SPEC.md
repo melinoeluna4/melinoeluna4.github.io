@@ -270,6 +270,8 @@ Routes:
 | `/sitemap.xml`          | static endpoint        | routes, posts, tags                          | XML sitemap                                                          |
 | `/404.html`             | static                 | none                                         | styled not-found page                                                |
 
+Each CLI repository also publishes a standalone GitHub Pages landing page at `https://melinoeluna4.github.io/<tool>/` with its own design, install command, usage and links back to the repository and this portfolio. The project `demoUrl` points to it.
+
 Commands:
 
 | Command                        | Purpose                                               |
@@ -326,25 +328,25 @@ Theme contract: `localStorage` key `theme` with values `light` | `dark`; applied
 
 All seventeen questions are closed for this build; the full rationale is in [ADR 0003](docs/adr/0003-static-github-pages-content-collections.md).
 
-| Question | Decision                                                                                                                      |
-| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Q1       | Local Markdown content collections. No D1, no admin write path.                                                               |
-| Q2       | `/blog` gets the filter. It is client-side, with static tag pages as the no-JS path.                                          |
-| Q3       | Both: tag counts on `/blog` and a 3-post mini-feed on `/`.                                                                    |
-| Q4       | Spanish UI and copy; required status labels stay `In Progress`/`Completed`; identifiers and code are English.                 |
-| Q5       | GitHub Pages user site: `https://melinoeluna4.github.io/`, repository `melinoeluna4/melinoeluna4.github.io`.                  |
-| Q6       | GitHub `melinoeluna4`, LinkedIn `melinoeluna4`, X `melinoeluna4`; edit `src/config.ts` if the LinkedIn path differs.          |
-| Q7       | Skills: `advanced` / `intermediate` / `learning`. Roadmap: `done` / `learning` / `planned`.                                   |
-| Q8       | No SSR. The filter is not a reason to add an adapter.                                                                         |
-| Q9       | No Workers. Static GitHub Pages only.                                                                                         |
-| Q10      | INP ≤ 200 ms is the target; FID ≤ 100 ms is a secondary check.                                                                |
-| Q11      | Custom 404, sitemap and RSS are in scope and implemented.                                                                     |
-| Q12      | No analytics; the site is tracker-free.                                                                                       |
-| Q13      | Social links only; no contact form or `mailto:` backend.                                                                      |
-| Q14      | All-Constructivist light/dark palette, system fonts, no third-party assets.                                                   |
-| Q15      | 5 projects: the four Go CLI tools (envcheck, portwait, httpcheck, treehash) and the portfolio; 4 published posts and 1 draft. |
-| Q16      | No project covers; `endDate` is required when `status: completed`.                                                            |
-| Q17      | The biography is drafted as editable sample content in `src/data/about.ts`; the owner reviews and replaces it.                |
+| Question | Decision                                                                                                                         |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Q1       | Local Markdown content collections. No D1, no admin write path.                                                                  |
+| Q2       | `/blog` gets the filter. It is client-side, with static tag pages as the no-JS path.                                             |
+| Q3       | Both: tag counts on `/blog` and a 3-post mini-feed on `/`.                                                                       |
+| Q4       | Spanish UI and copy; required status labels stay `In Progress`/`Completed`; identifiers and code are English.                    |
+| Q5       | GitHub Pages user site: `https://melinoeluna4.github.io/`, repository `melinoeluna4/melinoeluna4.github.io`.                     |
+| Q6       | GitHub `melinoeluna4`, LinkedIn `melinoeluna4`, X `melinoeluna4`; edit `src/config.ts` if the LinkedIn path differs.             |
+| Q7       | Skills: `advanced` / `intermediate` / `learning`. Roadmap: `done` / `learning` / `planned`.                                      |
+| Q8       | No SSR. The filter is not a reason to add an adapter.                                                                            |
+| Q9       | No Workers. Static GitHub Pages only.                                                                                            |
+| Q10      | INP ≤ 200 ms is the target; FID ≤ 100 ms is a secondary check.                                                                   |
+| Q11      | Custom 404, sitemap and RSS are in scope and implemented.                                                                        |
+| Q12      | No analytics; the site is tracker-free.                                                                                          |
+| Q13      | Social links only; no contact form or `mailto:` backend.                                                                         |
+| Q14      | All-Constructivist light/dark palette, system fonts, no third-party assets.                                                      |
+| Q15      | 6 projects: five Go CLI tools (envcheck, portwait, httpcheck, treehash, mdtoc) and the portfolio; 4 published posts and 1 draft. |
+| Q16      | No project covers; `endDate` is required when `status: completed`.                                                               |
+| Q17      | The biography is drafted as editable sample content in `src/data/about.ts`; the owner reviews and replaces it.                   |
 
 ## Milestones
 

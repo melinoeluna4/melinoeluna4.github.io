@@ -5,6 +5,7 @@ description: "CLI en Go que calcula un SHA-256 determinista de un árbol de dire
 tags: ["Go", "CLI", "SHA-256", "CI"]
 status: completed
 repoUrl: "https://github.com/melinoeluna4/treehash"
+demoUrl: "https://melinoeluna4.github.io/treehash/"
 featured: true
 startDate: 2026-11-04
 endDate: 2026-11-06

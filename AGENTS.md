@@ -2,7 +2,7 @@
 
 ## Project
 
-Personal site of Melinoe Luna, DevOps Engineer & Backend Developer: a portfolio, technical brand and mini blog. Audience: recruiters/hiring managers (P1), peer developers (P2) and the author publishing notes (P3). Astro 7 with TypeScript, Markdown content collections validated by Zod, Tailwind CSS 4, static output on GitHub Pages, no UI framework runtime. The portfolio links four Go CLI tools in separate public repositories and a GitHub profile README. Behaviour and acceptance criteria live in [SPEC.md](SPEC.md).
+Personal site of Melinoe Luna, DevOps Engineer & Backend Developer: a portfolio, technical brand and mini blog. Audience: recruiters/hiring managers (P1), peer developers (P2) and the author publishing notes (P3). Astro 7 with TypeScript, Markdown content collections validated by Zod, Tailwind CSS 4, static output on GitHub Pages, no UI framework runtime. The portfolio links five Go CLI tools in separate public repositories, each with its own GitHub Pages landing page, plus a GitHub profile README. Behaviour and acceptance criteria live in [SPEC.md](SPEC.md).
 
 ## Read first
 
@@ -67,6 +67,7 @@ Dependency direction: `pages → layouts → components → lib → data/types`.
 - Images, if added, go through `astro:assets` with width, height and `alt`; decorative images use `alt=""`. The current design uses CSS geometry, not content images.
 - New section: collection + schema → query helper in `lib/` → page with `getStaticPaths` → layout/components.
 - A project card links to `/proyectos/<slug>/`; the detail page renders the project Markdown body and the sitemap picks the slug up automatically. Tool repositories live outside this repo and are linked from the content frontmatter.
+- Each tool repository owns a `docs/` GitHub Pages landing page with a distinct design. The portfolio project's `demoUrl` points to it; keep the landing page and the portfolio card in sync when a tool changes.
 - URLs are stable: renaming a slug requires a redirect in `astro.config.mjs`. The canonical origin is `https://melinoeluna4.github.io`; the repository is the GitHub user site, so `base` stays `/`.
 - `tsconfig.json` keeps `strict`, `noUncheckedIndexedAccess`, `noImplicitOverride`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax` and `isolatedModules` on; a file never lowers them locally. `tsc` only checks, the bundler emits.
 - Biome 2 is the only lint/format config: no `.eslintrc*`, no `.prettierrc*`. Recommended rules plus `noExplicitAny`, `noUnusedVariables` and `useImportType` as errors; imports are sorted by Biome, never by hand. `noUnusedImports`/`noUnusedVariables` are disabled for `.astro` because Biome cannot see template usage.
@@ -105,4 +106,5 @@ Dependency direction: `pages → layouts → components → lib → data/types`.
 - [ ] Every page sets title, description and canonical via `Seo.astro`; one `<header>`, one `<main>`, one `<footer>` and one `<h1>`.
 - [ ] No horizontal scroll at 320 px and 360 px; code blocks scroll inside their container; focus is visible; reduced motion is respected.
 - [ ] The filter updates the URL and announces the count; static tag pages still work without JavaScript.
+- [ ] A CLI change also updates its `docs/` landing page, README and portfolio `demoUrl` when the URL changes.
 - [ ] Docs reflect the change; the diff is minimal; the commit message follows Conventional Commits.
