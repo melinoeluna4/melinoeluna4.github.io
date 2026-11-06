@@ -14,7 +14,7 @@ The portfolio also links five small Go CLI tools, each in its own public reposit
 | `treehash`  | Deterministic SHA-256 of a directory tree for CI cache keys            | [repo](https://github.com/melinoeluna4/treehash)  | [demo](https://melinoeluna4.github.io/treehash/)  |
 | `mdtoc`     | Generates a table of contents from Markdown headings                   | [repo](https://github.com/melinoeluna4/mdtoc)     | [demo](https://melinoeluna4.github.io/mdtoc/)     |
 
-The GitHub profile README lives in [melinoeluna4/melinoeluna4](https://github.com/melinoeluna4/melinoeluna4).
+The GitHub profile README lives in [melinoeluna4/melinoeluna4](https://github.com/melinoeluna4/melinoeluna4). All five landing pages are self-contained, axe-clean, have no horizontal scroll at 320/360 px and scored 100 in Lighthouse mobile (Performance, Accessibility, Best Practices and SEO) on 2026-11-06.
 
 ## Stack
 
