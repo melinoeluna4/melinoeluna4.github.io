@@ -1,0 +1,70 @@
+---
+// The pre-paint theme script lives in BaseLayout; this component only owns
+// the visible control and its post-paint behaviour.
+---
+
+<button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+  <span class="theme-toggle__icon" id="theme-toggle-icon" aria-hidden="true">☾</span>
+  <span class="theme-toggle__label" id="theme-toggle-label">Oscuro</span>
+</button>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById("theme-toggle");
+    const icon = document.getElementById("theme-toggle-icon");
+    const label = document.getElementById("theme-toggle-label");
+
+    if (!button || !icon || !label) {
+      return;
+    }
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const currentTheme = () =>
+      document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+
+    const render = () => {
+      const isDark = currentTheme() === "dark";
+
+      button.setAttribute("aria-pressed", String(isDark));
+      button.setAttribute("aria-label", isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro");
+      icon.textContent = isDark ? "☀" : "☾";
+      label.textContent = isDark ? "Claro" : "Oscuro";
+    };
+
+    const apply = (theme) => {
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {
+        // Storage can be blocked; the visual change still applies for this page.
+      }
+
+      render();
+    };
+
+    button.addEventListener("click", () => {
+      apply(currentTheme() === "dark" ? "light" : "dark");
+    });
+
+    media.addEventListener("change", (event) => {
+      let stored = null;
+
+      try {
+        stored = localStorage.getItem("theme");
+      } catch {
+        // No stored preference: keep following the system.
+      }
+
+      if (stored !== "light" && stored !== "dark") {
+        document.documentElement.dataset.theme = event.matches ? "dark" : "light";
+        document.documentElement.style.colorScheme = event.matches ? "dark" : "light";
+        render();
+      }
+    });
+
+    render();
+  })();
+</script>

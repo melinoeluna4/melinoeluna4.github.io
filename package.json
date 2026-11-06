@@ -1,0 +1,41 @@
+{
+  "name": "melinoe-luna-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "sync": "astro sync",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "typecheck": "tsc --noEmit",
+    "test": "pnpm run test:unit && pnpm run test:e2e",
+    "test:unit": "vitest run --passWithNoTests --dir src",
+    "test:e2e": "node scripts/e2e.mjs",
+    "hooks:install": "lefthook install",
+    "deploy": "gh workflow run deploy.yml --ref main"
+  },
+  "dependencies": {
+    "astro": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "@axe-core/playwright": "latest",
+    "@biomejs/biome": "latest",
+    "@playwright/test": "latest",
+    "@tailwindcss/vite": "latest",
+    "@types/node": "latest",
+    "lefthook": "latest",
+    "tailwindcss": "latest",
+    "typescript": "6.0.3",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}

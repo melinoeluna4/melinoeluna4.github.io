@@ -1,0 +1,70 @@
+---
+import type { TagCount } from "../lib/content-types";
+import { resultCountLabel } from "../lib/filter-posts";
+
+interface Props {
+  tags: readonly TagCount[];
+  total: number;
+}
+
+const { tags, total } = Astro.props;
+---
+
+<form
+  class="filter-bar"
+  id="blog-filter"
+  method="get"
+  action="/blog/"
+  role="search"
+  aria-label="Filtrar notas del blog"
+>
+  <div class="field">
+    <label class="field__label" for="blog-query">Buscar</label>
+    <input
+      class="input"
+      id="blog-query"
+      name="q"
+      type="search"
+      maxlength="100"
+      placeholder="Go, Rust, caché…"
+      autocomplete="off"
+      aria-describedby="blog-query-help"
+    />
+    <p class="field__hint" id="blog-query-help">
+      Busca en títulos, descripciones y etiquetas. Máximo 100 caracteres.
+    </p>
+  </div>
+
+  <div class="field">
+    <label class="field__label" for="blog-tag">Etiqueta</label>
+    <select class="select" id="blog-tag" name="tag">
+      <option value="">Todas</option>
+      {tags.map((tag) => <option value={tag.slug}>{tag.name} ({tag.count})</option>)}
+    </select>
+  </div>
+
+  <div class="filter-bar__actions">
+    <button class="btn btn--primary" type="submit">Filtrar</button>
+    <a class="btn btn--ghost" id="blog-clear" href="/blog/">Limpiar</a>
+  </div>
+</form>
+
+<div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+  <p class="result-count" id="post-count" role="status" aria-live="polite">
+    {resultCountLabel(total)}
+  </p>
+  <p class="result-count"><a href="/rss.xml">Suscripción RSS</a></p>
+</div>
+
+<noscript>
+  <p class="noscript-note mt-4">
+    El filtro en vivo necesita JavaScript. Sin él, usa el índice de etiquetas para ver las notas
+    de un tema.
+  </p>
+</noscript>
+
+<script>
+  import { initBlogFilter } from "../scripts/blog-filter";
+
+  initBlogFilter();
+</script>

@@ -1,0 +1,49 @@
+---
+import { site } from "../config";
+import { isActivePath } from "../lib/navigation";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="page-shell header-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">{site.shortName}</span>
+      <span>{site.name}</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      {
+        site.nav.map((item) => (
+          <a
+            class="nav-link"
+            href={item.href}
+            aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="header-actions">
+      <ThemeToggle />
+      <details class="mobile-menu">
+        <summary class="mobile-menu__summary">Menú</summary>
+        <nav class="mobile-menu__panel" aria-label="Navegación móvil">
+          {
+            site.nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

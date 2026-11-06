@@ -1,0 +1,50 @@
+---
+import { site } from "../config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="page-shell footer-inner">
+    <div>
+      <p class="footer-brand">{site.name}</p>
+      <p class="footer-note mt-4">{site.role}. {site.focus.join(" · ")}.</p>
+      <p class="footer-note mt-4">
+        Construyo sistemas pequeños, observables y desplegables. El código y las notas viven aquí.
+      </p>
+    </div>
+
+    <div>
+      <nav class="footer-links" aria-label="Navegación del pie">
+        {
+          site.nav.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))
+        }
+        <a href="/rss.xml">RSS</a>
+      </nav>
+
+      <nav class="footer-links mt-4" aria-label="Enlaces sociales">
+        {
+          site.social.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${link.label} de ${site.name}: ${link.handle} (se abre en una pestaña nueva)`}
+            >
+              {link.label} <span aria-hidden="true">↗</span>
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+
+  <div class="page-shell">
+    <div class="footer-meta">
+      <span>© {year} {site.name}</span>
+      <span>Astro · GitHub Pages · sin trackers</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o se ha movido."
+  noindex
+>
+  <section class="page-shell section" aria-labelledby="not-found-title">
+    <p class="font-display text-display uppercase text-accent" aria-hidden="true">404</p>
+    <h1 class="mt-4 text-heading" id="not-found-title">Esta página no existe</h1>
+    <p class="lead mt-4">
+      Puede que el enlace esté mal escrito, que la nota se haya movido o que el draft todavía no
+      sea público.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a class="btn btn--primary" href="/">Volver al inicio</a>
+      <a class="btn btn--secondary" href="/proyectos/">Ver proyectos</a>
+      <a class="btn btn--ghost" href="/blog/">Ir al blog</a>
+    </div>
+  </section>
+</BaseLayout>

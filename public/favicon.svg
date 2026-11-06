@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Melinoe Luna">
+  <rect width="64" height="64" fill="#f5f5f5"/>
+  <rect x="8" y="8" width="48" height="48" fill="#1a1a1a"/>
+  <circle cx="43" cy="21" r="12" fill="#c40000"/>
+  <path d="M8 43 L56 27 L56 35 L8 51 Z" fill="#c40000"/>
+  <text x="14" y="43" font-family="Liberation Sans, Arial, sans-serif" font-size="17" font-weight="bold" fill="#f5f5f5">ML</text>
+</svg>

@@ -1,0 +1,55 @@
+---
+import PostList from "../../../components/PostList.astro";
+import TagList from "../../../components/TagList.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { getPosts, getPostsByTag, getTagIndex } from "../../../lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const tags = await getTagIndex(posts);
+
+  return tags.map((tag) => ({
+    params: { tag: tag.slug },
+    props: { tagName: tag.name },
+  }));
+}
+
+interface Props {
+  tagName: string;
+}
+
+const { tagName } = Astro.props;
+const slug = Astro.params.tag ?? "";
+const posts = await getPosts();
+const tags = await getTagIndex(posts);
+const filtered = getPostsByTag(posts, slug);
+---
+
+<BaseLayout
+  title={`Etiqueta: ${tagName}`}
+  description={`Notas sobre ${tagName} en el blog de Melinoe Luna.`}
+>
+  <section class="page-header page-shell" aria-labelledby="tag-title">
+    <a class="link-arrow" href="/blog/">Volver al blog</a>
+    <p class="eyebrow mt-6">Etiqueta</p>
+    <h1 class="mt-3 font-display text-display uppercase" id="tag-title">{tagName}</h1>
+    <p class="lead mt-4">
+      {filtered.length} {filtered.length === 1 ? "nota" : "notas"} sobre {tagName}.
+    </p>
+  </section>
+
+  <section class="page-shell section" aria-labelledby="tag-posts-title">
+    <h2 class="text-heading" id="tag-posts-title">Notas</h2>
+    <div class="mt-8">
+      <PostList posts={filtered} />
+    </div>
+  </section>
+
+  <section class="page-shell section rule" aria-labelledby="tag-index-title">
+    <p class="eyebrow">Otras etiquetas</p>
+    <h2 class="mt-3 text-heading" id="tag-index-title">Explorar</h2>
+    <div class="mt-8">
+      <TagList tags={tags} active={slug} />
+    </div>
+  </section>
+</BaseLayout>

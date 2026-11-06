@@ -1,0 +1,60 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import Seo from "../components/Seo.astro";
+import { site } from "../config";
+import "../styles/app.css";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string | undefined;
+  type?: "website" | "article" | undefined;
+  publishedTime?: Date | undefined;
+  modifiedTime?: Date | undefined;
+  tags?: readonly string[] | undefined;
+  noindex?: boolean | undefined;
+}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+        let theme = media.matches ? "dark" : "light";
+
+        try {
+          const stored = localStorage.getItem("theme");
+          if (stored === "light" || stored === "dark") {
+            theme = stored;
+          }
+        } catch {
+          // Storage can be blocked; the system preference remains the fallback.
+        }
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
+    <Seo {...props} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

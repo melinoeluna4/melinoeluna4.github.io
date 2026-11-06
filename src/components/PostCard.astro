@@ -1,0 +1,48 @@
+---
+import type { PostView } from "../lib/content-types";
+import { formatDateShort, toIsoDate } from "../lib/format-date";
+import { tagHref, tagSlug } from "../lib/tag";
+
+interface Props {
+  post: PostView;
+}
+
+const { post } = Astro.props;
+const postUrl = `/blog/${post.slug}/`;
+const searchText = [post.title, post.description, ...post.tags].join(" ");
+const tagSlugs = post.tags.map((tag) => tagSlug(tag)).join("|");
+---
+
+<article
+  class="post-row"
+  data-post-item
+  data-search={searchText}
+  data-tags={tagSlugs}
+  aria-labelledby={`post-${post.slug}-title`}
+>
+  <div class="post-row__head">
+    <time class="post-row__date" datetime={toIsoDate(post.pubDate)}>
+      {formatDateShort(post.pubDate)}
+    </time>
+    <span class="post-row__date" aria-hidden="true">/</span>
+    <span class="post-row__date">{post.tags.join(" · ")}</span>
+  </div>
+
+  <h3 class="post-row__title" id={`post-${post.slug}-title`}>
+    <a href={postUrl}>{post.title}</a>
+  </h3>
+
+  <p class="post-row__description">{post.description}</p>
+
+  <ul class="tag-list" aria-label={`Etiquetas de ${post.title}`}>
+    {
+      post.tags.map((tag) => (
+        <li>
+          <a class="chip" href={tagHref(tag)}>
+            {tag}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</article>

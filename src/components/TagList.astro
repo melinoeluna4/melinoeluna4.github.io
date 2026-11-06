@@ -1,0 +1,33 @@
+---
+import type { TagCount } from "../lib/content-types";
+import { tagHref } from "../lib/tag";
+
+interface Props {
+  tags: readonly TagCount[];
+  active?: string | undefined;
+}
+
+const { tags, active } = Astro.props;
+---
+
+{
+  tags.length === 0 ? (
+    <p class="muted">Todavía no hay etiquetas publicadas.</p>
+  ) : (
+    <ul class="tag-index">
+      {tags.map((tag) => (
+        <li>
+          <a
+            class="tag-index__item"
+            href={tagHref(tag.name)}
+            aria-current={active === tag.slug ? "page" : undefined}
+          >
+            <span>{tag.name}</span>
+            <span class="tag-index__count">{tag.count}</span>
+            <span class="sr-only">{tag.count === 1 ? "nota" : "notas"}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

@@ -1,0 +1,25 @@
+---
+import type { PostView } from "../lib/content-types";
+import PostCard from "./PostCard.astro";
+
+interface Props {
+  posts: readonly PostView[];
+  emptyMessage?: string;
+}
+
+const { posts, emptyMessage = "Todavía no hay notas publicadas." } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <div class="empty-state">
+      <p>{emptyMessage}</p>
+    </div>
+  ) : (
+    <div class="post-list" id="post-list">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  )
+}

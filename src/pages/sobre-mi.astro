@@ -1,0 +1,191 @@
+---
+import { site } from "../config";
+import { about } from "../data/about";
+import { roadmap, roadmapStatusIcons, roadmapStatusLabels } from "../data/roadmap";
+import { skillLevels, skills } from "../data/skills";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import type { SkillLevel } from "../lib/content-types";
+
+const levelFill: Record<SkillLevel, number> = {
+  advanced: 3,
+  intermediate: 2,
+  learning: 1,
+};
+---
+
+<BaseLayout
+  title="Sobre mí"
+  description="Historia, formación, roadmap y skills de Melinoe Luna, DevOps Engineer y Backend Developer."
+>
+  <section class="page-header page-shell" aria-labelledby="sobre-mi-title">
+    <p class="eyebrow">02 / Sobre mí</p>
+    <div class="mt-4 flex flex-wrap items-end justify-between gap-6">
+      <h1 class="font-display text-display uppercase" id="sobre-mi-title">Sobre mí</h1>
+      <p class="lead max-w-measure">
+        Backend, infraestructura y aprendizaje visible. Esto es lo que sé, lo que estoy practicando
+        y cómo trabajo.
+      </p>
+    </div>
+  </section>
+
+  <section class="page-shell section" aria-labelledby="historia-title">
+    <div class="two-col">
+      <div>
+        <p class="eyebrow">Historia</p>
+        <h2 class="mt-3 text-heading" id="historia-title">De la curiosidad al despliegue</h2>
+        <div class="mt-6 grid gap-4">
+          {
+            about.intro.map((paragraph, index) => (
+              <p class:list={[index === 0 ? "lead" : "text-body"]}>{paragraph}</p>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="aside-note" aria-labelledby="datos-title">
+        <p class="eyebrow">Datos rápidos</p>
+        <h2 class="mt-3 text-subheading" id="datos-title">Dónde estoy</h2>
+
+        <dl class="mt-5 grid gap-4">
+          <div>
+            <dt class="field__label">Ubicación</dt>
+            <dd class="mt-1 text-ui">{about.location}</dd>
+          </div>
+          <div>
+            <dt class="field__label">Disponibilidad</dt>
+            <dd class="mt-1 text-ui">{about.availability}</dd>
+          </div>
+          <div>
+            <dt class="field__label">Foco</dt>
+            <dd class="focus-list mt-2">
+              {site.focus.map((focus) => <span class="chip">{focus}</span>)}
+            </dd>
+          </div>
+        </dl>
+
+        <ul class="tag-list mt-6" aria-label="Enlaces sociales">
+          {
+            site.social.map((link) => (
+              <li>
+                <a
+                  class="chip"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${link.label} de ${site.name}: ${link.handle} (se abre en una pestaña nueva)`}
+                >
+                  {link.label} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="page-shell section rule" aria-labelledby="formacion-title">
+    <p class="eyebrow">Formación</p>
+    <h2 class="mt-3 text-heading" id="formacion-title">Dónde aprendí las bases</h2>
+
+    <div class="education-list mt-8">
+      {
+        about.education.map((item) => (
+          <article class="education-item">
+            <p class="education-item__period">{item.period}</p>
+            <h3 class="mt-2 text-subheading">{item.title}</h3>
+            <p class="education-item__school mt-1">{item.school}</p>
+            <p class="mt-2 text-ui text-muted">{item.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="page-shell section rule" aria-labelledby="principios-title">
+    <p class="eyebrow">Principios</p>
+    <h2 class="mt-3 text-heading" id="principios-title">Cómo trabajo</h2>
+
+    <div class="mt-8 grid gap-8 md:grid-cols-2">
+      {
+        about.principles.map((principle, index) => (
+          <article class="border-t-2 border-border-strong pt-4">
+            <p class="mono text-small text-muted">{String(index + 1).padStart(2, "0")}</p>
+            <h3 class="mt-2 text-subheading">{principle.title}</h3>
+            <p class="mt-2 text-ui text-muted">{principle.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="page-shell section rule" aria-labelledby="roadmap-title">
+    <p class="eyebrow">Roadmap</p>
+    <h2 class="mt-3 text-heading" id="roadmap-title">Lo que estoy aprendiendo</h2>
+    <p class="lead mt-4">
+      Sin fechas inventadas: cada tema tiene un estado y una nota de por qué está ahí.
+    </p>
+
+    <ol class="timeline mt-8">
+      {
+        roadmap.map((item) => (
+          <li class="timeline__item" data-status={item.status}>
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="timeline__label">{item.label}</h3>
+              <span class="timeline__status">
+                <span aria-hidden="true">{roadmapStatusIcons[item.status]}</span>
+                {roadmapStatusLabels[item.status]}
+              </span>
+            </div>
+            <p class="timeline__note mt-1">{item.note}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="page-shell section rule" aria-labelledby="skills-title">
+    <p class="eyebrow">Skills</p>
+    <h2 class="mt-3 text-heading" id="skills-title">Herramientas por nivel</h2>
+    <p class="lead mt-4">
+      El nivel describe mi relación actual con la herramienta, no una nota de examen.
+    </p>
+
+    <div class="mt-8 grid gap-10">
+      {
+        skillLevels.map((level) => {
+          const levelSkills = skills.filter((skill) => skill.level === level.id);
+
+          return (
+            <section class="skill-group" aria-labelledby={`skill-level-${level.id}`}>
+              <div class="skill-group__title">
+                <h3 id={`skill-level-${level.id}`}>{level.label}</h3>
+                <span class="mono text-small text-muted">{levelSkills.length} skills</span>
+              </div>
+              <p class="mt-2 text-ui text-muted">{level.description}</p>
+
+              <div class="skill-grid">
+                {levelSkills.map((skill) => (
+                  <article class="skill">
+                    <p class="skill__name">{skill.name}</p>
+                    <div class="skill__meta mt-2">
+                      <span>{skill.category}</span>
+                      <span>
+                        {level.label}
+                        <span class="level-meter ml-2" aria-hidden="true">
+                          {[1, 2, 3].map((step) => (
+                            <span data-filled={step <= levelFill[level.id]}></span>
+                          ))}
+                        </span>
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

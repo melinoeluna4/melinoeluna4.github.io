@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+.astro/
+*.tsbuildinfo
+
+# Cloudflare
+.wrangler/
+
+# Environment files (secrets stay local; the example is committed)
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+
+# Test artifacts
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor and OS noise
+.DS_Store

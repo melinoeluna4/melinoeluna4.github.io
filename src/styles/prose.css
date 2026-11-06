@@ -1,0 +1,159 @@
+@layer components {
+  .prose {
+    max-width: var(--container-measure);
+    font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+    line-height: 1.75;
+  }
+
+  .prose > * + * {
+    margin-top: 1.35em;
+  }
+
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    scroll-margin-top: 6rem;
+  }
+
+  .prose h2 {
+    margin-top: 2.2em;
+    font-size: clamp(1.6rem, 1.35rem + 1vw, 2.25rem);
+  }
+
+  .prose h3 {
+    margin-top: 1.8em;
+    font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.6rem);
+  }
+
+  .prose h4 {
+    margin-top: 1.5em;
+    font-size: 1.15rem;
+  }
+
+  .prose p,
+  .prose li {
+    hyphens: auto;
+    overflow-wrap: break-word;
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.35em;
+  }
+
+  .prose ul {
+    list-style: square;
+  }
+
+  .prose ol {
+    list-style: decimal;
+  }
+
+  .prose li + li {
+    margin-top: 0.35em;
+  }
+
+  .prose li::marker {
+    color: var(--accent);
+  }
+
+  .prose a {
+    font-weight: 600;
+  }
+
+  .prose strong {
+    font-weight: 800;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid var(--accent);
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+  }
+
+  .prose hr {
+    height: 2px;
+    border: 0;
+    background: var(--border-strong);
+    margin-block: 2.5rem;
+  }
+
+  .prose code {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-control);
+    background: var(--surface-sunken);
+    color: var(--text);
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+    padding: 0.08em 0.3em;
+  }
+
+  .prose pre,
+  .astro-code {
+    overflow-x: auto;
+    border: 2px solid var(--border-strong);
+    border-radius: var(--radius-card);
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    padding: 1rem;
+    tab-size: 2;
+  }
+
+  .prose pre code {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: inherit;
+    overflow-wrap: normal;
+    padding: 0;
+    white-space: pre;
+  }
+
+  .prose .astro-code span {
+    color: var(--shiki-light);
+  }
+
+  [data-theme="dark"] .prose .astro-code span {
+    color: var(--shiki-dark);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .prose .astro-code span {
+      color: var(--shiki-dark);
+    }
+  }
+
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+  }
+
+  .prose th {
+    background: var(--surface-sunken);
+    font-family: var(--font-display-stack);
+    font-weight: 800;
+  }
+
+  .prose img {
+    border: 2px solid var(--border-strong);
+  }
+
+  .prose figcaption {
+    color: var(--text-muted);
+    font-size: var(--text-small);
+    margin-top: 0.5rem;
+  }
+}
