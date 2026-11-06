@@ -31,7 +31,7 @@ export const site = {
   name: "Melinoe Luna",
   shortName: "ML",
   role: "DevOps Engineer & Backend Developer",
-  focus: ["DevOps", "Go", "Rust", "Cloudflare"],
+  focus: ["Go", "DevOps", "Rust", "Cloudflare"],
   description:
     "Portfolio y notas técnicas de Melinoe Luna, DevOps Engineer y Backend Developer especializada en Go, Rust y Cloudflare.",
   locale: "es",

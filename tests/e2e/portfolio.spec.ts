@@ -2,7 +2,14 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 
 const siteOrigin = "https://melinoeluna4.github.io";
-const publicPages = ["/", "/proyectos/", "/sobre-mi/", "/blog/", "/blog/go-context-en-produccion/"];
+const publicPages = [
+  "/",
+  "/proyectos/",
+  "/proyectos/envcheck/",
+  "/sobre-mi/",
+  "/blog/",
+  "/blog/go-context-en-produccion/",
+];
 
 async function expectNoHorizontalScroll(page: Page): Promise<void> {
   const overflow = await page.evaluate(
@@ -170,19 +177,20 @@ test.describe("projects", () => {
   test("lists every project with a text status and visible tags", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1, name: "Proyectos" })).toBeVisible();
     await expect(page.locator(".project-card")).toHaveCount(5);
-    await expect(page.locator(".status--in-progress")).toHaveCount(3);
-    await expect(page.locator(".status--completed")).toHaveCount(2);
+    await expect(page.locator(".status--in-progress")).toHaveCount(1);
+    await expect(page.locator(".status--completed")).toHaveCount(4);
     await expect(page.locator(".status--in-progress").first()).toContainText("In Progress");
     await expect(page.locator(".status--completed").first()).toContainText("Completed");
-    await expect(page.getByText("Kubernetes", { exact: true })).toBeVisible();
-    await expect(page.getByText("Terraform", { exact: true })).toBeVisible();
+    await expect(page.getByText("SHA-256", { exact: true })).toBeVisible();
+    await expect(page.getByText("Configuración", { exact: true })).toBeVisible();
     await expect(page.locator('a[href=""]')).toHaveCount(0);
   });
 
   test("only renders repository and demo links that exist", async ({ page }) => {
-    const rustCard = page.locator(".project-card").filter({ hasText: "Rust Log Relay" });
-    await expect(rustCard.getByRole("link", { name: /Repositorio/ })).toHaveCount(1);
-    await expect(rustCard.getByRole("link", { name: /Demo/ })).toHaveCount(0);
+    const envcheckCard = page.locator(".project-card").filter({ hasText: "envcheck" });
+    await expect(envcheckCard.getByRole("link", { name: /Ver ficha/ })).toHaveCount(1);
+    await expect(envcheckCard.getByRole("link", { name: /Repositorio/ })).toHaveCount(1);
+    await expect(envcheckCard.getByRole("link", { name: /Demo/ })).toHaveCount(0);
 
     const edgeCard = page.locator(".project-card").filter({ hasText: "Edge Notes" });
     await expect(edgeCard.getByRole("link", { name: /Repositorio/ })).toHaveCount(1);
@@ -195,6 +203,26 @@ test.describe("projects", () => {
   });
 
   test("passes axe", async ({ page }) => {
+    await expectNoAxeViolations(page);
+  });
+});
+
+test.describe("project detail", () => {
+  test("renders the mini presentation and links", async ({ page }) => {
+    await page.goto("/proyectos/envcheck/");
+
+    await expect(page.getByRole("heading", { level: 1, name: "envcheck" })).toBeVisible();
+    await expect(page.locator(".prose")).toContainText("Qué resuelve");
+    await expect(page.getByRole("link", { name: /Repositorio/ })).toHaveAttribute(
+      "href",
+      "https://github.com/melinoeluna4/envcheck",
+    );
+    await expect(page.getByRole("link", { name: "Volver a proyectos" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 2, name: "Sigue explorando" })).toBeVisible();
+  });
+
+  test("passes axe", async ({ page }) => {
+    await page.goto("/proyectos/envcheck/");
     await expectNoAxeViolations(page);
   });
 });
@@ -228,7 +256,7 @@ test.describe("about", () => {
       await expect(page.getByRole("heading", { level: 3, name: level })).toBeVisible();
     }
 
-    await expect(page.locator(".skill")).toHaveCount(20);
+    await expect(page.locator(".skill")).toHaveCount(22);
   });
 
   test("passes axe", async ({ page }) => {
@@ -374,6 +402,7 @@ test.describe("SEO and feeds", () => {
   for (const { path, type } of [
     { path: "/", type: "website" as const },
     { path: "/proyectos/", type: "website" as const },
+    { path: "/proyectos/envcheck/", type: "website" as const },
     { path: "/sobre-mi/", type: "website" as const },
     { path: "/blog/", type: "website" as const },
     { path: "/blog/go-context-en-produccion/", type: "article" as const },
@@ -390,6 +419,7 @@ test.describe("SEO and feeds", () => {
 
     expect(html).toContain("Melinoe Luna");
     expect(html).toContain("Proyectos destacados");
+    expect(html).toContain("envcheck");
     expect(html).toContain("Context en Go");
   });
 
@@ -412,6 +442,7 @@ test.describe("SEO and feeds", () => {
     expect(body).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
     expect(body).toContain("https://melinoeluna4.github.io/");
     expect(body).toContain("https://melinoeluna4.github.io/proyectos/");
+    expect(body).toContain("https://melinoeluna4.github.io/proyectos/envcheck/");
     expect(body).toContain("https://melinoeluna4.github.io/blog/go-context-en-produccion/");
     expect(body).toContain("https://melinoeluna4.github.io/blog/etiqueta/go/");
     expect(body).not.toContain("kubernetes-no-es-la-respuesta");

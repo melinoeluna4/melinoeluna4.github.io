@@ -4,6 +4,17 @@ Personal site of Melinoe Luna, DevOps Engineer & Backend Developer: a portfolio,
 
 The visual language is Constructivist: asymmetric layouts, red/black geometry and direct typography. The light theme uses the DESIGN.md base palette; the dark theme keeps the same language with lighter surfaces and a brighter accent. There is no UI framework runtime.
 
+The portfolio also links four small Go CLI tools, each in its own public repository with README, tests and CI:
+
+| Tool        | What it does                                                           | Repository                                                          |
+| ----------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `envcheck`  | Compares `.env` with `.env.example` and fails on missing or empty keys | [melinoeluna4/envcheck](https://github.com/melinoeluna4/envcheck)   |
+| `portwait`  | Waits for TCP endpoints to accept connections                          | [melinoeluna4/portwait](https://github.com/melinoeluna4/portwait)   |
+| `httpcheck` | Smoke-tests HTTP endpoints with retries and an expected status         | [melinoeluna4/httpcheck](https://github.com/melinoeluna4/httpcheck) |
+| `treehash`  | Deterministic SHA-256 of a directory tree for CI cache keys            | [melinoeluna4/treehash](https://github.com/melinoeluna4/treehash)   |
+
+The GitHub profile README lives in [melinoeluna4/melinoeluna4](https://github.com/melinoeluna4/melinoeluna4).
+
 ## Stack
 
 | Layer           | Choice                                                                                                                                                                                    |
@@ -65,6 +76,7 @@ The development server runs at `http://localhost:4321`. The production output is
 | ----------------------- | ----------------------------------------------------------------------- |
 | `/`                     | Hero, focus statement, featured projects, recent notes and social links |
 | `/proyectos/`           | Every published project with status, tags, repository and demo links    |
+| `/proyectos/<slug>/`    | One project with a mini presentation and links to its repository/demo   |
 | `/sobre-mi/`            | History, education, principles, roadmap and skills by level             |
 | `/blog/`                | Published notes newest-first, tag index and the live filter             |
 | `/blog/<slug>/`         | One post with build-time Shiki highlighting, dates and tags             |
@@ -120,7 +132,7 @@ Code fences are highlighted at build time by Astro/Shiki. The production output 
 - `src/data/roadmap.ts`: roadmap items with `done`, `learning` or `planned`.
 - `src/config.ts`: name, role, focus, description, social URLs, handles and navigation.
 
-The repository ships sample content so every screen renders. Replace the sample projects, posts and biography before sharing the site as the final version. The LinkedIn URL and the project repository URLs are placeholders unless those repositories exist.
+The repository ships the four Go CLI projects and the portfolio project, all with real public repositories. The posts, biography, skills, roadmap and social URLs are editable; confirm the LinkedIn path before sharing the site widely.
 
 ## Theme
 
@@ -161,14 +173,14 @@ The canonical origin is `astro.config.mjs` (`site: "https://melinoeluna4.github.
 ├── public/                   favicon, OG image, robots.txt, .nojekyll
 ├── scripts/e2e.mjs           build + preview + Playwright lifecycle
 ├── src/
-│   ├── components/           Seo, Header, Footer, ThemeToggle, cards, filter
+│   ├── components/           Seo, Header, Footer, cards, filter, StatusBadge
 │   ├── content/
 │   │   ├── blog/             one Markdown file per post
-│   │   └── projects/         one Markdown file per project
+│   │   └── projects/         one Markdown file per project, rendered as a detail page
 │   ├── data/                 about, skills, roadmap
-│   ├── layouts/              BaseLayout, PostLayout
+│   ├── layouts/              BaseLayout, PostLayout, ProjectLayout
 │   ├── lib/                  queries, dates, tags, filter, XML, types
-│   ├── pages/                routes, RSS, sitemap, 404
+│   ├── pages/                routes, project detail, RSS, sitemap, 404
 │   ├── scripts/              blog filter client module
 │   ├── styles/               app.css tokens, base, components, prose, motion
 │   └── content.config.ts     collection schemas
@@ -190,14 +202,14 @@ Dependency direction: `pages → layouts → components → lib → data/types`.
 - No UI framework runtime is shipped. The only client JavaScript is the inline theme controls and the filter module.
 - Every page has one `<header>`, one `<main>`, one `<footer>`, one `<h1>`, a skip link and a complete `Seo.astro` contract.
 - The 320 px and 360 px checks assert no horizontal page scroll; code blocks scroll inside their own container.
-- axe checks pass in the light and dark themes on the home, projects, about, blog and post pages.
+- axe checks pass in the light and dark themes on the home, projects, project detail, about, blog and post pages.
 
-Lighthouse mobile (2026-11-06) scores 100 in Performance, Accessibility, Best Practices and SEO on the live home and on the local build of `/`, `/proyectos/`, `/blog/` and `/blog/go-context-en-produccion/`. The live home measured LCP 1.0 s, CLS 0 and TBT 0 ms; the local pages measured LCP 0.8–0.9 s and CLS ≤ 0.001. These are lab numbers; field LCP/CLS/INP still need a production run after the content replacement.
+Lighthouse mobile (2026-11-06) scores 100 in Performance, Accessibility, Best Practices and SEO on the live home and on the local build of `/`, `/proyectos/`, `/proyectos/envcheck/`, `/blog/` and `/blog/go-context-en-produccion/`. The live home measured LCP 1.0 s, CLS 0 and TBT 0 ms; the local pages measured LCP 0.8–0.9 s and CLS ≤ 0.001. These are lab numbers; field LCP/CLS/INP still need a production run after the content replacement.
 
 ## Open work
 
-- Replace the sample biography, project repositories and social URLs with the final ones.
-- Confirm the LinkedIn profile path and the project repository URLs.
+- Review the biography, posts and social URLs with the final copy.
+- Confirm the LinkedIn profile path.
 - Optionally add a custom domain and a `CNAME` file.
 - Revisit the TypeScript pin when `@astrojs/check` supports TypeScript 7.
 - Add a `cloudflare`-style security header set only if the deploy target changes; GitHub Pages does not apply one from this repository.

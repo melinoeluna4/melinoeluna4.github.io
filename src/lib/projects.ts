@@ -1,4 +1,5 @@
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import type { ProjectView } from "./content-types";
 
 function assertUniqueSlugs(collection: string, projects: readonly ProjectView[]): void {
@@ -64,4 +65,10 @@ export async function getFeaturedProjects(limit = 4): Promise<ProjectView[]> {
 export async function getProjectCount(): Promise<number> {
   const entries = await getCollection("projects");
   return entries.length;
+}
+
+export async function getProjectEntry(
+  slug: string,
+): Promise<CollectionEntry<"projects"> | undefined> {
+  return getEntry("projects", slug);
 }

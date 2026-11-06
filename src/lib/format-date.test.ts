@@ -34,6 +34,10 @@ describe("formatDate", () => {
     expect(formatDateRange("2026-03-10")).toBe("mar 2026 — presente");
   });
 
+  it("collapses a range that starts and ends in the same month", () => {
+    expect(formatDateRange("2026-11-01", "2026-11-06")).toBe("nov 2026");
+  });
+
   it("serialises a date to an ISO day", () => {
     expect(toIsoDate("2026-10-28T15:30:00Z")).toBe("2026-10-28");
   });

@@ -87,6 +87,7 @@ The system must publish `/proyectos` as a grid or list of projects with technolo
 - Given a project with tags, when its card renders, then all tags are visible as text (not icon-only) and the tag list is not truncated without a way to read it.
 - Given a project with no demo URL, when its card renders, then no demo link is rendered (no empty anchor).
 - Given a project with a repository URL, when the card renders, then the link opens the repository in a new tab.
+- Given a project card, when the title or "Ver ficha" is activated, then `/proyectos/<slug>/` renders the project Markdown body, status, dates, tags and repository/demo links.
 
 **FR-6 — ProjectCard component**
 
@@ -260,7 +261,8 @@ Routes:
 | ----------------------- | ---------------------- | -------------------------------------------- | -------------------------------------------------------------------- |
 | `/`                     | static                 | site config, featured projects, recent posts | hero, focus statement, featured projects, recent notes, social links |
 | `/sobre-mi/`            | static                 | `about`, `skills`, `roadmap`                 | history, education, principles, roadmap, skills by level             |
-| `/proyectos/`           | static                 | `projects` collection                        | responsive grid with tags, status, repo/demo links                   |
+| `/proyectos/`           | static                 | `projects` collection                        | responsive grid with tags, status, detail/repo/demo links            |
+| `/proyectos/<slug>/`    | static per project     | one `projects` entry                         | mini presentation, status, dates, tags and repo/demo links           |
 | `/blog/`                | static + client filter | `blog` collection, tag index                 | listing newest-first, live filter, tag index                         |
 | `/blog/<slug>/`         | static per post        | one `blog` entry                             | article with build-time code highlighting, dates and meta/OG         |
 | `/blog/etiqueta/<tag>/` | static per tag         | tag slug generated from the collection       | filtered listing; the no-JS tag path                                 |
@@ -286,17 +288,19 @@ Commands:
 
 Components (props contract):
 
-| Component            | Props                                        | Renders                                                                  |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| `Header.astro`       | none (reads `site`)                          | one header, active nav, native mobile menu, `ThemeToggle`                |
-| `Footer.astro`       | none (reads `site`)                          | copyright, site links, external social links                             |
-| `ThemeToggle.astro`  | none                                         | button, `aria-pressed`, inline post-paint behaviour                      |
-| `ProjectCard.astro`  | `project: ProjectView`, `index: number`      | title, description, tags, text status badge, conditional repo/demo links |
-| `PostCard.astro`     | `post: PostView`                             | title, date, description, tags, filter data attributes                   |
-| `TagList.astro`      | `tags: TagCount[]`, `active?: string`        | static tag links with counts                                             |
-| `PostList.astro`     | `posts: PostView[]`, `emptyMessage?: string` | list or explicit empty state                                             |
-| `SearchFilter.astro` | `tags: TagCount[]`, `total: number`          | GET form, client filter, live count, no-JS note                          |
-| `Seo.astro`          | title, description, image, type, dates, tags | title, description, canonical, OG, Twitter and article metadata          |
+| Component             | Props                                             | Renders                                                             |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------------------------- |
+| `Header.astro`        | none (reads `site`)                               | one header, active nav, native mobile menu, `ThemeToggle`           |
+| `Footer.astro`        | none (reads `site`)                               | copyright, site links, external social links                        |
+| `ThemeToggle.astro`   | none                                              | button, `aria-pressed`, inline post-paint behaviour                 |
+| `ProjectCard.astro`   | `project: ProjectView`, `index: number`           | title, description, tags, text status badge, detail/repo/demo links |
+| `StatusBadge.astro`   | `status: ProjectStatus`                           | icon + `In Progress`/`Completed`, shared by cards and detail pages  |
+| `ProjectLayout.astro` | `project: ProjectView`, `related?: ProjectView[]` | project detail shell, Markdown body and related projects            |
+| `PostCard.astro`      | `post: PostView`                                  | title, date, description, tags, filter data attributes              |
+| `TagList.astro`       | `tags: TagCount[]`, `active?: string`             | static tag links with counts                                        |
+| `PostList.astro`      | `posts: PostView[]`, `emptyMessage?: string`      | list or explicit empty state                                        |
+| `SearchFilter.astro`  | `tags: TagCount[]`, `total: number`               | GET form, client filter, live count, no-JS note                     |
+| `Seo.astro`           | title, description, image, type, dates, tags      | title, description, canonical, OG, Twitter and article metadata     |
 
 Theme contract: `localStorage` key `theme` with values `light` | `dark`; applied on `<html>` before first paint; no `theme` value means follow `prefers-color-scheme`. The CSS uses `light-dark()` so the system preference also applies with JavaScript disabled.
 
@@ -322,25 +326,25 @@ Theme contract: `localStorage` key `theme` with values `light` | `dark`; applied
 
 All seventeen questions are closed for this build; the full rationale is in [ADR 0003](docs/adr/0003-static-github-pages-content-collections.md).
 
-| Question | Decision                                                                                                             |
-| -------- | -------------------------------------------------------------------------------------------------------------------- |
-| Q1       | Local Markdown content collections. No D1, no admin write path.                                                      |
-| Q2       | `/blog` gets the filter. It is client-side, with static tag pages as the no-JS path.                                 |
-| Q3       | Both: tag counts on `/blog` and a 3-post mini-feed on `/`.                                                           |
-| Q4       | Spanish UI and copy; required status labels stay `In Progress`/`Completed`; identifiers and code are English.        |
-| Q5       | GitHub Pages user site: `https://melinoeluna4.github.io/`, repository `melinoeluna4/melinoeluna4.github.io`.         |
-| Q6       | GitHub `melinoeluna4`, LinkedIn `melinoeluna4`, X `melinoeluna4`; edit `src/config.ts` if the LinkedIn path differs. |
-| Q7       | Skills: `advanced` / `intermediate` / `learning`. Roadmap: `done` / `learning` / `planned`.                          |
-| Q8       | No SSR. The filter is not a reason to add an adapter.                                                                |
-| Q9       | No Workers. Static GitHub Pages only.                                                                                |
-| Q10      | INP ≤ 200 ms is the target; FID ≤ 100 ms is a secondary check.                                                       |
-| Q11      | Custom 404, sitemap and RSS are in scope and implemented.                                                            |
-| Q12      | No analytics; the site is tracker-free.                                                                              |
-| Q13      | Social links only; no contact form or `mailto:` backend.                                                             |
-| Q14      | All-Constructivist light/dark palette, system fonts, no third-party assets.                                          |
-| Q15      | Sample content ships: 5 projects (4 featured), 4 published posts and 1 draft; replace it before the final launch.    |
-| Q16      | No project covers; `endDate` is required when `status: completed`.                                                   |
-| Q17      | The biography is drafted as editable sample content in `src/data/about.ts`; the owner reviews and replaces it.       |
+| Question | Decision                                                                                                                      |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Q1       | Local Markdown content collections. No D1, no admin write path.                                                               |
+| Q2       | `/blog` gets the filter. It is client-side, with static tag pages as the no-JS path.                                          |
+| Q3       | Both: tag counts on `/blog` and a 3-post mini-feed on `/`.                                                                    |
+| Q4       | Spanish UI and copy; required status labels stay `In Progress`/`Completed`; identifiers and code are English.                 |
+| Q5       | GitHub Pages user site: `https://melinoeluna4.github.io/`, repository `melinoeluna4/melinoeluna4.github.io`.                  |
+| Q6       | GitHub `melinoeluna4`, LinkedIn `melinoeluna4`, X `melinoeluna4`; edit `src/config.ts` if the LinkedIn path differs.          |
+| Q7       | Skills: `advanced` / `intermediate` / `learning`. Roadmap: `done` / `learning` / `planned`.                                   |
+| Q8       | No SSR. The filter is not a reason to add an adapter.                                                                         |
+| Q9       | No Workers. Static GitHub Pages only.                                                                                         |
+| Q10      | INP ≤ 200 ms is the target; FID ≤ 100 ms is a secondary check.                                                                |
+| Q11      | Custom 404, sitemap and RSS are in scope and implemented.                                                                     |
+| Q12      | No analytics; the site is tracker-free.                                                                                       |
+| Q13      | Social links only; no contact form or `mailto:` backend.                                                                      |
+| Q14      | All-Constructivist light/dark palette, system fonts, no third-party assets.                                                   |
+| Q15      | 5 projects: the four Go CLI tools (envcheck, portwait, httpcheck, treehash) and the portfolio; 4 published posts and 1 draft. |
+| Q16      | No project covers; `endDate` is required when `status: completed`.                                                            |
+| Q17      | The biography is drafted as editable sample content in `src/data/about.ts`; the owner reviews and replaces it.                |
 
 ## Milestones
 

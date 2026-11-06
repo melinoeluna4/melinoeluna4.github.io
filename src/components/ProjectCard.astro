@@ -1,7 +1,7 @@
 ---
 import type { ProjectView } from "../lib/content-types";
 import { formatDateRange } from "../lib/format-date";
-import { projectStatusIcons, projectStatusLabels } from "../lib/project-status";
+import StatusBadge from "./StatusBadge.astro";
 
 interface Props {
   project: ProjectView;
@@ -10,7 +10,7 @@ interface Props {
 
 const { project, index } = Astro.props;
 const titleId = `project-${project.slug}-title`;
-const hasLinks = Boolean(project.repoUrl || project.demoUrl);
+const projectUrl = `/proyectos/${project.slug}/`;
 ---
 
 <article class="project-card surface-card" aria-labelledby={titleId}>
@@ -20,15 +20,7 @@ const hasLinks = Boolean(project.repoUrl || project.demoUrl);
 
   <div class="project-card__body">
     <div class="flex flex-wrap items-center justify-between gap-2">
-      <span
-        class:list={[
-          "status",
-          project.status === "in_progress" ? "status--in-progress" : "status--completed",
-        ]}
-      >
-        <span class="status__icon" aria-hidden="true">{projectStatusIcons[project.status]}</span>
-        {projectStatusLabels[project.status]}
-      </span>
+      <StatusBadge status={project.status} />
       {
         project.startDate ? (
           <span class="mono text-small text-muted">
@@ -38,7 +30,9 @@ const hasLinks = Boolean(project.repoUrl || project.demoUrl);
       }
     </div>
 
-    <h3 class="project-card__title" id={titleId}>{project.title}</h3>
+    <h3 class="project-card__title" id={titleId}>
+      <a href={projectUrl}>{project.title}</a>
+    </h3>
     <p class="project-card__description">{project.description}</p>
 
     <ul class="tag-list" aria-label={`Tecnologías de ${project.title}`}>
@@ -51,33 +45,34 @@ const hasLinks = Boolean(project.repoUrl || project.demoUrl);
       }
     </ul>
 
-    {
-      hasLinks ? (
-        <div class="project-card__links">
-          {project.repoUrl ? (
-            <a
-              class="link-arrow"
-              href={project.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Repositorio de ${project.title} (se abre en una pestaña nueva)`}
-            >
-              Repositorio <span aria-hidden="true">↗</span>
-            </a>
-          ) : null}
-          {project.demoUrl ? (
-            <a
-              class="link-arrow"
-              href={project.demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Demo de ${project.title} (se abre en una pestaña nueva)`}
-            >
-              Demo <span aria-hidden="true">↗</span>
-            </a>
-          ) : null}
-        </div>
-      ) : null
-    }
+    <div class="project-card__links">
+      <a class="link-arrow" href={projectUrl}>Ver ficha</a>
+      {
+        project.repoUrl ? (
+          <a
+            class="link-arrow"
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Repositorio de ${project.title} (se abre en una pestaña nueva)`}
+          >
+            Repositorio <span aria-hidden="true">↗</span>
+          </a>
+        ) : null
+      }
+      {
+        project.demoUrl ? (
+          <a
+            class="link-arrow"
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Demo de ${project.title} (se abre en una pestaña nueva)`}
+          >
+            Demo <span aria-hidden="true">↗</span>
+          </a>
+        ) : null
+      }
+    </div>
   </div>
 </article>

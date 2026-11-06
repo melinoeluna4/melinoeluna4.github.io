@@ -1,0 +1,15 @@
+---
+import type { ProjectStatus } from "../lib/content-types";
+import { projectStatusIcons, projectStatusLabels } from "../lib/project-status";
+
+interface Props {
+  status: ProjectStatus;
+}
+
+const { status } = Astro.props;
+---
+
+<span class:list={["status", status === "in_progress" ? "status--in-progress" : "status--completed"]}>
+  <span class="status__icon" aria-hidden="true">{projectStatusIcons[status]}</span>
+  {projectStatusLabels[status]}
+</span>

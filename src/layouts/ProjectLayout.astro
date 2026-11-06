@@ -1,0 +1,102 @@
+---
+import StatusBadge from "../components/StatusBadge.astro";
+import type { ProjectView } from "../lib/content-types";
+import { formatDateRange } from "../lib/format-date";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  project: ProjectView;
+  related?: readonly ProjectView[];
+}
+
+const { project, related = [] } = Astro.props;
+---
+
+<BaseLayout title={project.title} description={project.description}>
+  <article class="page-shell section">
+    <div class="mx-auto max-w-measure">
+      <a class="link-arrow" href="/proyectos/">Volver a proyectos</a>
+
+      <div class="mt-10">
+        <p class="eyebrow">Proyecto · {project.tags[0] ?? "Go"}</p>
+        <h1 class="mt-4 text-heading">{project.title}</h1>
+        <p class="lead mt-4">{project.description}</p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+          <StatusBadge status={project.status} />
+          {
+            project.startDate ? (
+              <span class="mono text-small text-muted">
+                {formatDateRange(project.startDate, project.endDate)}
+              </span>
+            ) : null
+          }
+        </div>
+
+        <ul class="tag-list mt-5" aria-label={`Tecnologías de ${project.title}`}>
+          {
+            project.tags.map((tag) => (
+              <li>
+                <span class="chip">{tag}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="project-card__links mt-6">
+          {
+            project.repoUrl ? (
+              <a
+                class="link-arrow"
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Repositorio de ${project.title} (se abre en una pestaña nueva)`}
+              >
+                Repositorio <span aria-hidden="true">↗</span>
+              </a>
+            ) : null
+          }
+          {
+            project.demoUrl ? (
+              <a
+                class="link-arrow"
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Demo de ${project.title} (se abre en una pestaña nueva)`}
+              >
+                Demo <span aria-hidden="true">↗</span>
+              </a>
+            ) : null
+          }
+        </div>
+      </div>
+
+      <div class="prose mt-10">
+        <slot />
+      </div>
+
+      {
+        related.length > 0 ? (
+          <section class="mt-16 border-t-2 border-border-strong pt-8" aria-labelledby="more-projects-title">
+            <p class="eyebrow">Más proyectos</p>
+            <h2 class="mt-3 text-heading" id="more-projects-title">
+              Sigue explorando
+            </h2>
+            <ul class="mt-6 grid gap-3">
+              {related.map((item) => (
+                <li>
+                  <a class="surface-card flex flex-wrap items-baseline justify-between gap-2 p-4" href={`/proyectos/${item.slug}/`}>
+                    <span class="font-display text-subheading">{item.title}</span>
+                    <span class="mono text-small text-muted">{item.tags.join(" · ")}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null
+      }
+    </div>
+  </article>
+</BaseLayout>

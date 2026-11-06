@@ -471,6 +471,11 @@
     overflow-wrap: anywhere;
   }
 
+  .project-card__title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
   .project-card__description {
     color: var(--text-muted);
     font-size: var(--text-ui);
@@ -1098,6 +1103,11 @@
     .post-row:hover .post-row__title a,
     .post-row__title a:focus-visible {
       background-size: 100% 0.14em;
+      color: var(--accent);
+    }
+
+    .project-card__title a:hover,
+    .project-card__title a:focus-visible {
       color: var(--accent);
     }
 

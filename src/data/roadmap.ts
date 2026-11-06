@@ -35,6 +35,16 @@ export const roadmap = [
     note: "Imágenes reproducibles, compose y pipelines de CI.",
   },
   {
+    label: "Publicar CLIs en Go",
+    status: "done",
+    note: "envcheck, portwait, httpcheck y treehash, con tests y CI.",
+  },
+  {
+    label: "Documentar herramientas",
+    status: "done",
+    note: "README, ejemplos de uso y una ficha en el portfolio para cada CLI.",
+  },
+  {
     label: "Concurrencia en Go",
     status: "learning",
     note: "Context, goroutines y canales aplicados a servicios reales.",

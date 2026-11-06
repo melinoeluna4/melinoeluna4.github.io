@@ -65,7 +65,14 @@ export function formatMonthYear(value: Date | string): string {
 
 export function formatDateRange(start: Date | string, end?: Date | string): string {
   const from = formatMonthYear(start);
-  return end ? `${from} — ${formatMonthYear(end)}` : `${from} — presente`;
+
+  if (!end) {
+    return `${from} — presente`;
+  }
+
+  const to = formatMonthYear(end);
+
+  return from === to ? from : `${from} — ${to}`;
 }
 
 export function toIsoDate(value: Date | string): string {

@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { site } from "../config";
 import { getPosts, getTagIndex } from "../lib/posts";
+import { getProjects } from "../lib/projects";
 import { absoluteUrl } from "../lib/site-url";
 import { escapeXml } from "../lib/xml";
 
@@ -12,13 +13,24 @@ interface SitemapEntry {
 export const GET: APIRoute = async (context) => {
   const posts = await getPosts();
   const tags = await getTagIndex(posts);
+  const projects = await getProjects();
   const origin = context.site ?? site.url;
+
+  const projectEntries: SitemapEntry[] = projects.map((project) => {
+    const date = project.endDate ?? project.startDate;
+
+    return {
+      path: `/proyectos/${project.slug}/`,
+      ...(date ? { lastmod: date.toISOString().slice(0, 10) } : {}),
+    };
+  });
 
   const entries: SitemapEntry[] = [
     { path: "/" },
     { path: "/proyectos/" },
     { path: "/sobre-mi/" },
     { path: "/blog/" },
+    ...projectEntries,
     ...posts.map((post) => ({
       path: `/blog/${post.slug}/`,
       lastmod: (post.updatedDate ?? post.pubDate).toISOString().slice(0, 10),

@@ -24,8 +24,9 @@ export interface AboutContent {
  */
 export const about = {
   intro: [
-    "Soy Melinoe Luna, DevOps Engineer y Backend Developer. Tengo 20 años y acabo de terminar mi formación en ingeniería informática.",
-    "Me interesa la parte del software que hace que todo lo demás funcione: APIs pequeñas, despliegues reproducibles, observabilidad y sistemas que fallan de forma predecible. Trabajo sobre todo con Go, Rust y el ecosistema de Cloudflare.",
+    "Soy Melinoe Luna, mujer dev en Go, DevOps Engineer y Backend Developer. Tengo 20 años y acabo de terminar mi formación en ingeniería informática.",
+    "Go es mi lenguaje principal: lo uso para APIs pequeñas, CLIs y automatización. Estoy publicando una colección de herramientas en Go con tests, CI y documentación; Rust, Docker, Linux y Cloudflare completan la caja de herramientas.",
+    "Me interesa la parte del software que hace que todo lo demás funcione: APIs pequeñas, despliegues reproducibles, observabilidad y sistemas que fallan de forma predecible.",
     "Este sitio es mi cuaderno público: proyectos, notas técnicas y el roadmap de lo que estoy aprendiendo. Si algo no está claro, el código suele estar en GitHub.",
   ],
   location: "España · remoto",
