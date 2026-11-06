@@ -192,7 +192,7 @@ Dependency direction: `pages → layouts → components → lib → data/types`.
 - The 320 px and 360 px checks assert no horizontal page scroll; code blocks scroll inside their own container.
 - axe checks pass in the light and dark themes on the home, projects, about, blog and post pages.
 
-Lighthouse mobile (local simulated, 2026-11-06) scores 100 in Performance, Accessibility, Best Practices and SEO on `/`, `/proyectos/`, `/blog/` and `/blog/go-context-en-produccion/`; LCP is 0.8–0.9 s, CLS ≤ 0.001 and TBT is 0 ms. These are lab numbers; field LCP/CLS/INP still need a production run after the content replacement.
+Lighthouse mobile (2026-11-06) scores 100 in Performance, Accessibility, Best Practices and SEO on the live home and on the local build of `/`, `/proyectos/`, `/blog/` and `/blog/go-context-en-produccion/`. The live home measured LCP 1.0 s, CLS 0 and TBT 0 ms; the local pages measured LCP 0.8–0.9 s and CLS ≤ 0.001. These are lab numbers; field LCP/CLS/INP still need a production run after the content replacement.
 
 ## Open work
 
