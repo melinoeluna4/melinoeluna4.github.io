@@ -169,7 +169,7 @@ The system must deploy to GitHub Pages on every push to `main` through `.github/
 
 **FR-15 — Content-driven pages**
 
-The system must drive `/proyectos`, `/blog`, `/blog/[slug]` and `/sobre-mi` data from Astro Content Collections with schema validation.
+The system must drive `/proyectos`, `/blog` and `/blog/[slug]` from Astro Content Collections with schema validation. `/sobre-mi` uses typed data modules (`about.ts`, `skills.ts`, `roadmap.ts`), which are compile-time checked and documented in ADR 0003.
 
 - Given a content file missing a required field, when the build runs, then it fails with a message naming the file and field.
 - Given a valid content file, when the build runs, then its page is generated without any manual route registration.
@@ -186,7 +186,7 @@ The system must drive `/proyectos`, `/blog`, `/blog/[slug]` and `/sobre-mi` data
 - **NFR-8 Availability/cost:** static assets served from the GitHub Pages CDN; the site uses the free public-repository Pages tier.
 - **NFR-9 Browser support:** latest two versions of Chrome, Firefox, Safari and Edge; all content readable without JavaScript.
 - **NFR-10 Maintainability:** TypeScript strict mode; one component per file under `src/components/`; content schemas defined once in `src/content/config.ts`; `README.md` documents setup, content authoring and deploy.
-- **NFR-11 i18n:** single copy language in v1 (per Q4); all user-facing strings centralised in one place so a later translation does not require touching components.
+- **NFR-11 i18n:** single copy language in v1 (Spanish, per Q4); no i18n routing. Copy lives in the pages, components and content files; centralising it is deferred until a second language is actually required.
 
 ## Data
 
