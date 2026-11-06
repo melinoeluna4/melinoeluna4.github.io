@@ -14,7 +14,7 @@
     "sync": "astro sync",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro sync && tsc --noEmit",
     "test": "pnpm run test:unit && pnpm run test:e2e",
     "test:unit": "vitest run --passWithNoTests --dir src",
     "test:e2e": "node scripts/e2e.mjs",
